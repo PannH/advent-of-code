@@ -13,16 +13,15 @@ for (const line of input.split('\n')) {
     lists[1].push(values[1]);
 }
 
-lists.map((list) => list.sort((a, b) => a - b));
-
-const distances: number[] = [];
-
-for (let i = 0; i < lists[0].length; i++) {
-    const values = [lists[0][i], lists[1][i]].sort((a, b) => b - a);
-    const distance = values[0] - values[1];
-    distances.push(distance);
+const similarityScores: number[] = [];
+for (const value of lists[0]) {
+    const occurrences = lists[1].filter((val) => val === value).length;
+    similarityScores.push(value * occurrences);
 }
 
-const totalDistance = distances.reduce((acc, distance) => acc + distance, 0);
+const totalSimilarityScore = similarityScores.reduce(
+    (acc, val) => acc + val,
+    0
+);
 
-console.log(`Total distance = ${totalDistance}`);
+console.log(`Total similarity score = ${totalSimilarityScore}`);
