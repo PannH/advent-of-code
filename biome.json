@@ -29,7 +29,8 @@
         "rules": {
             "recommended": true,
             "style": {
-                "useEnumInitializers": "off"
+                "useEnumInitializers": "off",
+                "noNonNullAssertion": "off"
             },
             "correctness": {
                 "noUnusedImports": "warn"
