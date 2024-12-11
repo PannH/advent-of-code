@@ -8,8 +8,7 @@ for (const line of input.split('\n').filter((l) => l !== '')) {
     reports.push(levels);
 }
 
-let safeReportsCount = 0;
-reportLoop: for (const report of reports) {
+function isReportSafe(report: number[]): boolean {
     const ascendingSortedReport = report.slice().sort((a, b) => a - b);
     const descendingSortedReport = report.slice().sort((a, b) => b - a);
 
@@ -17,7 +16,7 @@ reportLoop: for (const report of reports) {
         ascendingSortedReport.toString() !== report.toString() &&
         descendingSortedReport.toString() !== report.toString()
     ) {
-        continue;
+        return false;
     }
 
     for (let i = 0; i < report.length - 1; i++) {
@@ -26,10 +25,25 @@ reportLoop: for (const report of reports) {
 
         const difference = Math.abs(level - nextLevel);
 
-        if (difference < 1 || difference > 3) continue reportLoop;
+        if (difference < 1 || difference > 3) return false;
     }
 
-    safeReportsCount++;
+    return true;
+}
+
+let safeReportsCount = 0;
+for (const report of reports) {
+    if (isReportSafe(report)) {
+        safeReportsCount++;
+    } else {
+        for (let i = 0; i < report.length; i++) {
+            const filteredReport = report.filter((_, idx) => idx !== i);
+            if (isReportSafe(filteredReport)) {
+                safeReportsCount++;
+                break;
+            }
+        }
+    }
 }
 
 console.log(`Safe reports count = ${safeReportsCount}`);
