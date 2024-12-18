@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 
 const input = readFileSync('years/2024/06/input.txt', 'utf-8');
 
